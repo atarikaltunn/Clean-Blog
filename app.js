@@ -5,7 +5,6 @@ const ejs = require('ejs');
 const Posts = require('./models/posts');
 const postController = require('./controllers/postController');
 const pageController = require('./controllers/pageController');
-
 const app = express();
 
 //DB CONNECTION
@@ -37,7 +36,6 @@ app.delete('/post/:id', postController.deletePost);
 app.get('/about', pageController.getAboutPage);
 app.get('/add', pageController.getAddPage);
 app.get('/edit/:id', pageController.getEditPage);
-
 
 const port = 3000;
 app.listen(port, () => {

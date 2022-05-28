@@ -1,10 +1,24 @@
 const Posts = require('../models/posts');
 
 exports.getMainPage = async (req, res) => {
-    const posts = await Posts.find({});
+    var page = req.query.page || 1;
+    const postPerPage = 3;
+
+    const totalPost = await Posts.find().countDocuments();
+    const posts = await Posts.find({})
+        .sort('-dateCreated')
+        .skip((page - 1) * postPerPage)
+        .limit(postPerPage);
+
     res.render('index', {
-        posts,
+        posts: posts,
+        current: page,
+        pages: Math.ceil(totalPost / postPerPage),
     });
+    // const posts = await Posts.find({}).sort('-dateCreated');
+    // res.render('index', {
+    //     posts,
+    // });
 };
 
 exports.getPost = async (req, res) => {
